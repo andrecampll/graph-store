@@ -15,6 +15,8 @@ export const Button = ({ children, ...props }: ButtonProps) => (
     color="white.900"
     borderRadius="none"
     textTransform="uppercase"
+    fontWeight="normal"
+    letterSpacing="0.07em"
     _hover={{
       opacity: 0.8,
     }}
