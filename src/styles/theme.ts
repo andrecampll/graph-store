@@ -1,26 +1,27 @@
-import { extendTheme } from "@chakra-ui/react";
+import { extendTheme } from '@chakra-ui/react';
 
 export const theme = extendTheme({
   colors: {
     black: {
-      "900": "#000000",
+      '900': '#000000',
     },
     white: {
-      "900": "#FFFFFF",
+      '900': '#FFFFFF',
     },
     gray: {
-      "900": "#E4E4E4",
+      '900': '#E4E4E4',
+      '700': '#656565',
     },
   },
   fonts: {
-    heading: "Archivo",
-    body: "Archivo",
+    heading: 'Archivo',
+    body: 'Archivo',
   },
   styles: {
     global: {
       body: {
-        bg: "white.900",
-        color: "black.900",
+        bg: 'white.900',
+        color: 'black.900',
       },
     },
   },
