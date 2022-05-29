@@ -8,6 +8,7 @@ export const Header = () => (
     justifyContent="space-between"
     px={[8, 6, 4]}
     py={5}
+    mx={[0, 0, '22px']}
   >
     <Image src="logo.svg" />
 
