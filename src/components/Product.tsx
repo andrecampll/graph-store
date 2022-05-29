@@ -17,7 +17,7 @@ export const Product = ({
   highlight,
 }: Props) => (
   <Wrapper>
-    <Image src={imageUrl} height={['462px', '462px', '398px']} />
+    <Image src={imageUrl} maxH={['454px', '454px', '380px']} />
     {highlight && (
       <Wrapper width="163px" background="white.900">
         Best Seller

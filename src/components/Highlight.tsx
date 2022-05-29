@@ -12,7 +12,7 @@ export const Highlight = () => {
       borderColor="gray.900"
       flexDirection="column"
       py="8"
-      px="4"
+      mx={['4', '4', '22px']}
     >
       <Wrapper
         w="100%"
