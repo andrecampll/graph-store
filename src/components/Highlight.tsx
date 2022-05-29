@@ -4,7 +4,7 @@ import { Banner } from './Banner';
 import { Button } from './Button';
 
 export const Highlight = () => {
-  const [isLargerThan767] = useMediaQuery('(min-width: 768px)');
+  const [isLargerThan768] = useMediaQuery('(min-width: 768px)');
 
   return (
     <Wrapper
@@ -22,7 +22,7 @@ export const Highlight = () => {
       >
         <Heading>Samurai King Resting</Heading>
 
-        {isLargerThan767 && <Button w="257px">add to cart</Button>}
+        {isLargerThan768 && <Button w="257px">add to cart</Button>}
       </Wrapper>
 
       <Banner
@@ -30,12 +30,12 @@ export const Highlight = () => {
         highlight
       />
 
-      {!isLargerThan767 && <Button mb="8">add to cart</Button>}
+      {!isLargerThan768 && <Button mb="8">add to cart</Button>}
 
       <About
         name="Samurai King Resting"
         aboutText="So how did the classical Latin become so incoherent? According to McClintock, a 15th century typesetter likely scrambled part of Ciceros De Finibus in order to provide placeholder text to mockup various fonts for a type specimen book."
-        category={isLargerThan767 ? 'Pets' : ''}
+        category={isLargerThan768 ? 'Pets' : ''}
       />
     </Wrapper>
   );
