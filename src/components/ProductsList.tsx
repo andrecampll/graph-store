@@ -7,12 +7,15 @@ import {
   useMediaQuery,
   Select,
 } from '@chakra-ui/react';
+import { useModal } from '../hooks/useModal';
+
 import { Filter } from './Filter';
 import { Pagination } from './Pagination';
 import { ProductsGrid } from './ProductsGrid';
 
 export const ProductsList = () => {
   const [isLargerThan768] = useMediaQuery('(min-width: 768px)');
+  const { toggle } = useModal();
 
   return (
     <Wrapper px={['4', '4', '2']} my="12" mx={[0, 0, '22px']}>
@@ -41,7 +44,7 @@ export const ProductsList = () => {
             </Select>
           </Flex>
         ) : (
-          <Image src="filter.svg" />
+          <Image src="filter.svg" cursor="pointer" onClick={toggle} />
         )}
       </Flex>
 
