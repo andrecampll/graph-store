@@ -1,5 +1,5 @@
-import { Flex, Icon, Image } from '@chakra-ui/react';
-import { AiOutlineShoppingCart } from 'react-icons/ai';
+import { Flex, Image } from '@chakra-ui/react';
+import { Cart } from './Cart';
 
 export const Header = () => (
   <Flex
@@ -12,6 +12,6 @@ export const Header = () => (
   >
     <Image src="logo.svg" />
 
-    <Icon w={8} height={8} as={AiOutlineShoppingCart} />
+    <Cart />
   </Flex>
 );
