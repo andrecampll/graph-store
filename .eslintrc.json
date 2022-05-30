@@ -51,7 +51,8 @@
     "prettier/prettier": "error",
     "import/prefer-default-export": "off",
     "react/function-component-definition": "off",
-    "react/require-default-props": "off"
+    "react/require-default-props": "off",
+    "react/no-unstable-nested-components": "off"
   },
   "settings": {
     "import/resolver": {
