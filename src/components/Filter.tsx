@@ -48,6 +48,18 @@ const priceRanges = [
     id: '4',
     title: 'More than $200',
   },
+  {
+    id: '2',
+    title: '$20 - $100',
+  },
+  {
+    id: '3',
+    title: '$100 - $200',
+  },
+  {
+    id: '4',
+    title: 'More than $200',
+  },
 ];
 
 export const Filter = () => (
@@ -58,10 +70,12 @@ export const Filter = () => (
         marginTop: '40px',
       },
     }}
-    width="20%"
+    width="100%"
+    left="0"
+    bottom="0"
   >
     <Box width={['100%', '100%', '78%']}>
-      <Heading fontSize="22px" mb="44px">
+      <Heading fontSize={['34px', '22px']} mb={['30px', '10']}>
         Category
       </Heading>
 
@@ -72,6 +86,7 @@ export const Filter = () => (
             colorScheme="black.900"
             iconColor="black.900"
             borderColor="black"
+            size={['lg', 'md']}
           >
             {category.title}
           </Checkbox>
@@ -80,7 +95,7 @@ export const Filter = () => (
     </Box>
 
     <Box width="100%">
-      <Heading fontSize="22px" mb="10" mt="8">
+      <Heading fontSize={['34px', '22px']} mb={['30px', '10']} mt="8">
         Price range
       </Heading>
 
@@ -91,6 +106,7 @@ export const Filter = () => (
             colorScheme="black.900"
             iconColor="black.900"
             borderColor="black"
+            size={['lg', 'md']}
           >
             {range.title}
           </Checkbox>

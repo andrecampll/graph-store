@@ -49,7 +49,11 @@ export const ProductsList = () => {
       </Flex>
 
       <Flex justifyContent={['center', 'center', 'space-between']}>
-        {isLargerThan768 ? <Filter /> : null}
+        {isLargerThan768 ? (
+          <Wrapper width="20%">
+            <Filter />
+          </Wrapper>
+        ) : null}
 
         <Flex flexDir="column" alignItems="center" w={['100%', '100%', '78%']}>
           <ProductsGrid
