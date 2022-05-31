@@ -1,5 +1,5 @@
 import { Box } from '@chakra-ui/react';
-import { FilterModal } from '../components/FilterModal';
+import { FilterModal } from '../components/Modal/FilterModal';
 import { Header } from '../components/Header';
 import { Highlight } from '../components/Highlight';
 import { ProductsList } from '../components/ProductsList';
