@@ -1,12 +1,28 @@
 import { Box, Flex as Wrapper, Heading, Text } from '@chakra-ui/react';
+import { formatBytes } from '../utils/formatBytes';
 
 type Props = {
   name: string;
   aboutText: string;
   category: string;
+  recommendedProducts: {
+    slug: string;
+    imageUrl: string;
+  }[];
+  dimensions: {
+    height?: number;
+    width?: number;
+    size?: number;
+  };
 };
 
-export const About = ({ name, aboutText, category }: Props) => (
+export const About = ({
+  name,
+  aboutText,
+  category,
+  dimensions: { height, width, size },
+  recommendedProducts,
+}: Props) => (
   <Wrapper
     flexDir={['column', 'column', 'row']}
     justifyContent={['flex-start', 'space-between']}
@@ -37,29 +53,16 @@ export const About = ({ name, aboutText, category }: Props) => (
           },
         }}
       >
-        <Box
-          w="97px"
-          height="122"
-          background="url(https://images.pexels.com/photos/1019771/pexels-photo-1019771.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1)"
-          backgroundSize="cover"
-          backgroundPosition="center"
-        />
-
-        <Box
-          w="97px"
-          height="122"
-          background="url(https://images.pexels.com/photos/1019771/pexels-photo-1019771.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1)"
-          backgroundSize="cover"
-          backgroundPosition="center"
-        />
-
-        <Box
-          w="97px"
-          height="122"
-          background="url(https://images.pexels.com/photos/1019771/pexels-photo-1019771.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1)"
-          backgroundSize="cover"
-          backgroundPosition="center"
-        />
+        {recommendedProducts?.map(product => (
+          <Box
+            key={product.slug}
+            w="97px"
+            height="122"
+            background={`url(${product.imageUrl})`}
+            backgroundSize="cover"
+            backgroundPosition="center"
+          />
+        ))}
       </Wrapper>
 
       <Box mt="8">
@@ -67,8 +70,10 @@ export const About = ({ name, aboutText, category }: Props) => (
           Details
         </Heading>
 
-        <Text color="gray.700">Size: 1020 x 1020 pixel</Text>
-        <Text color="gray.700">Size: 15mb</Text>
+        <Text color="gray.700">
+          Size: {width} x {height} pixel
+        </Text>
+        <Text color="gray.700">Size: {formatBytes(size)}</Text>
       </Box>
     </Box>
   </Wrapper>

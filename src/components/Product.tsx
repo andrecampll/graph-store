@@ -4,20 +4,19 @@ import { Button } from './Button';
 export type Props = {
   category: string;
   name: string;
-  price: string;
-  imageUrl: string;
+  price?: number;
+  image?: {
+    url: string;
+    height?: number;
+    size?: number;
+    width?: number;
+  };
   highlight?: boolean;
 };
 
-export const Product = ({
-  category,
-  name,
-  price,
-  imageUrl,
-  highlight,
-}: Props) => (
+export const Product = ({ category, name, price, image, highlight }: Props) => (
   <Wrapper>
-    <Image src={imageUrl} maxH={['454px', '454px', '380px']} />
+    <Image src={image.url} maxH={['454px', '454px', '380px']} />
     {highlight && (
       <Wrapper width="163px" background="white.900">
         Best Seller

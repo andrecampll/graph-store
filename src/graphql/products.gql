@@ -1,8 +1,29 @@
-query getProducts {
-  products {
+query getProducts($where: ProductWhereInput) {
+  products(where: $where) {
     id
     name
     slug
     price
+    featured
+    description
+    bestseller
+    category
+
+    image {
+      size
+      url
+      width
+      height
+    }
+
+    recommendations {
+      slug
+    	image {
+        size
+        url
+        width
+        height
+      }
+    }
   }
 }
