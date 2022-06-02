@@ -10,7 +10,7 @@ import { useGetProductsQuery } from '../graphql/generated/graphql';
 export default function Home() {
   const { isOpen } = useModal();
 
-  const { data } = useGetProductsQuery({
+  const { data: highlightData } = useGetProductsQuery({
     variables: {
       where: {
         OR: [
@@ -24,20 +24,20 @@ export default function Home() {
 
   const recommendedProducts = useMemo(
     () =>
-      data?.products.flatMap(product =>
+      highlightData?.products.flatMap(product =>
         product.recommendations.map(recommendation => ({
           slug: recommendation.slug,
           imageUrl: recommendation.image.url,
         })),
       ),
-    [data?.products],
+    [highlightData?.products],
   );
 
   return (
     <Box margin="0 auto" maxW="1290">
       <Header />
       <Highlight
-        {...data?.products[0]}
+        {...highlightData?.products[0]}
         recommendedProducts={recommendedProducts}
       />
 

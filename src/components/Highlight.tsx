@@ -15,6 +15,7 @@ type Props = Pick<Product, 'name' | 'featured' | 'description'> & {
     size?: number;
     width?: number;
   };
+  category: string;
 };
 
 export const Highlight = ({
@@ -23,6 +24,7 @@ export const Highlight = ({
   featured,
   description,
   recommendedProducts,
+  category,
 }: Props) => {
   const [isLargerThan768] = useMediaQuery('(min-width: 768px)');
 
@@ -53,7 +55,7 @@ export const Highlight = ({
         recommendedProducts={recommendedProducts}
         name={name}
         aboutText={description}
-        category={isLargerThan768 ? 'Pets' : ''}
+        category={isLargerThan768 ? category : ''}
         dimensions={{
           ...image,
         }}

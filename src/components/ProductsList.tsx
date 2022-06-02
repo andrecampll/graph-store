@@ -7,7 +7,9 @@ import {
   useMediaQuery,
   Select,
 } from '@chakra-ui/react';
+import { useGetProductsQuery } from '../graphql/generated/graphql';
 import { useModal } from '../hooks/useModal';
+import { useProductsFilter } from '../hooks/useProductsFilter';
 
 import { Filter } from './Filter';
 import { Pagination } from './Pagination';
@@ -16,6 +18,21 @@ import { ProductsGrid } from './ProductsGrid';
 export const ProductsList = () => {
   const [isLargerThan768] = useMediaQuery('(min-width: 768px)');
   const { toggle } = useModal();
+
+  const { categories } = useProductsFilter();
+
+  const { data: productsData } = useGetProductsQuery({
+    variables: {
+      where: {
+        AND: [
+          {
+            featured: false,
+            category_in: categories.length ? categories : undefined,
+          },
+        ],
+      },
+    },
+  });
 
   return (
     <Wrapper px={['4', '4', '2']} my="12" mx={[0, 0, '22px']}>
@@ -56,52 +73,7 @@ export const ProductsList = () => {
         ) : null}
 
         <Flex flexDir="column" alignItems="center" w={['100%', '100%', '78%']}>
-          <ProductsGrid
-            products={[
-              {
-                category: 'People',
-                imageUrl:
-                  'https://images.pexels.com/photos/1019771/pexels-photo-1019771.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-                name: 'Lorem Ipsum',
-                price: '$3.89',
-              },
-              {
-                category: 'People',
-                imageUrl:
-                  'https://images.pexels.com/photos/1019771/pexels-photo-1019771.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-                name: 'Lorem Ipsum 2',
-                price: '$3.89',
-              },
-              {
-                category: 'People',
-                imageUrl:
-                  'https://images.pexels.com/photos/1019771/pexels-photo-1019771.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-                name: 'Lorem Ipsum 3',
-                price: '$3.89',
-              },
-              {
-                category: 'People',
-                imageUrl:
-                  'https://images.pexels.com/photos/1019771/pexels-photo-1019771.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-                name: 'Lorem Ipsum 4',
-                price: '$3.89',
-              },
-              {
-                category: 'People',
-                imageUrl:
-                  'https://images.pexels.com/photos/1019771/pexels-photo-1019771.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-                name: 'Lorem Ipsum 5',
-                price: '$3.89',
-              },
-              {
-                category: 'People',
-                imageUrl:
-                  'https://images.pexels.com/photos/1019771/pexels-photo-1019771.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-                name: 'Lorem Ipsum 6',
-                price: '$3.89',
-              },
-            ]}
-          />
+          <ProductsGrid products={productsData?.products} />
           <Wrapper mt="20">
             <Pagination totalCountOfRegisters={10} currentPage={3} />
           </Wrapper>

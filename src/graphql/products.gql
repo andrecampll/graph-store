@@ -7,6 +7,7 @@ query getProducts($where: ProductWhereInput) {
     featured
     description
     bestseller
+    category
 
     image {
       size

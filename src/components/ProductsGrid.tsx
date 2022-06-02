@@ -17,7 +17,7 @@ export const ProductsGrid = ({ products }: Props) => (
     justifyItems="center"
     w="100%"
   >
-    {products.map(product => (
+    {products?.map(product => (
       <Product key={product.name} {...product} />
     ))}
   </Grid>
