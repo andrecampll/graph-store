@@ -19,7 +19,45 @@ export const ProductsList = () => {
   const [isLargerThan768] = useMediaQuery('(min-width: 768px)');
   const { toggle } = useModal();
 
-  const { categories } = useProductsFilter();
+  const { categories, priceRanges } = useProductsFilter();
+
+  const rangeConditions = priceRanges.map(range => {
+    if (range === 'Lower than $20')
+      return {
+        AND: [
+          {
+            price_lt: 19,
+          },
+        ],
+      };
+
+    if (range === '$20 - $100')
+      return {
+        AND: [
+          {
+            price_gt: 20,
+            price_lt: 99,
+          },
+        ],
+      };
+
+    if (range === '$100 - $200')
+      return {
+        AND: [
+          {
+            price_gt: 100,
+            price_lt: 200,
+          },
+        ],
+      };
+
+    if (range === 'More than $200')
+      return {
+        price_gt: 200,
+      };
+
+    return undefined;
+  });
 
   const { data: productsData } = useGetProductsQuery({
     variables: {
@@ -28,6 +66,7 @@ export const ProductsList = () => {
           {
             featured: false,
             category_in: categories.length ? categories : undefined,
+            OR: rangeConditions,
           },
         ],
       },

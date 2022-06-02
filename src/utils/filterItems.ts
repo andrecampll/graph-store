@@ -31,22 +31,10 @@ export const categoryItems = [
   },
 ];
 
-export const priceRanges = [
+export const priceRangesItems = [
   {
     id: '1',
     title: 'Lower than $20',
-  },
-  {
-    id: '2',
-    title: '$20 - $100',
-  },
-  {
-    id: '3',
-    title: '$100 - $200',
-  },
-  {
-    id: '4',
-    title: 'More than $200',
   },
   {
     id: '2',
