@@ -8,9 +8,17 @@ import {
 } from 'react';
 import { Category } from '../graphql/generated/graphql';
 
+export type PriceRange =
+  | 'Lower than $20'
+  | '$20 - $100'
+  | '$100 - $200'
+  | 'More than $200';
+
 type ProductsFilterContextDTO = {
   categories: Category[];
-  handleFilter: (value: Category) => void;
+  priceRanges: PriceRange[];
+  handleFilterByCategory: (value: Category) => void;
+  handleFilterByRange: (value: PriceRange) => void;
 };
 
 type FilterProviderProps = {
@@ -21,8 +29,9 @@ const FilterContext = createContext({} as ProductsFilterContextDTO);
 
 export const ProductsFilterProvider = ({ children }: FilterProviderProps) => {
   const [categories, setCategories] = useState<Category[] | null>([]);
+  const [priceRanges, setPriceRanges] = useState<PriceRange[] | null>([]);
 
-  const handleFilter = useCallback(
+  const handleFilterByCategory = useCallback(
     (value: Category) => {
       if (categories.includes(value))
         return setCategories(state =>
@@ -34,12 +43,24 @@ export const ProductsFilterProvider = ({ children }: FilterProviderProps) => {
     [categories],
   );
 
+  const handleFilterByRange = useCallback(
+    (value: PriceRange) => {
+      if (priceRanges.includes(value))
+        return setPriceRanges(state => state.filter(range => range !== value));
+
+      return setPriceRanges(state => [...state, value]);
+    },
+    [priceRanges],
+  );
+
   const providerValue = useMemo(
     () => ({
       categories,
-      handleFilter,
+      handleFilterByCategory,
+      priceRanges,
+      handleFilterByRange,
     }),
-    [categories, handleFilter],
+    [categories, handleFilterByCategory, handleFilterByRange, priceRanges],
   );
 
   return (

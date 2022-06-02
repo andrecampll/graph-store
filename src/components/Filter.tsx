@@ -2,11 +2,16 @@ import * as R from 'ramda';
 
 import { Box, Heading, Checkbox, Stack } from '@chakra-ui/react';
 import { Category } from '../graphql/generated/graphql';
-import { useProductsFilter } from '../hooks/useProductsFilter';
-import { categoryItems, priceRanges } from '../utils/filterItems';
+import { PriceRange, useProductsFilter } from '../hooks/useProductsFilter';
+import { categoryItems, priceRangesItems } from '../utils/filterItems';
 
 export const Filter = () => {
-  const { categories, handleFilter } = useProductsFilter();
+  const {
+    categories,
+    handleFilterByCategory,
+    priceRanges,
+    handleFilterByRange,
+  } = useProductsFilter();
 
   return (
     <Box
@@ -36,7 +41,7 @@ export const Filter = () => {
               size={['lg', 'md']}
               value={categoryItem.title}
               onChange={({ target: { value } }) =>
-                handleFilter(value as Category)
+                handleFilterByCategory(value as Category)
               }
             >
               {categoryItem.title}
@@ -51,15 +56,20 @@ export const Filter = () => {
         </Heading>
 
         <Stack spacing={5}>
-          {priceRanges.map(range => (
+          {priceRangesItems.map(rangeItem => (
             <Checkbox
-              key={range.id}
+              isChecked={R.includes(rangeItem.title, priceRanges)}
+              key={rangeItem.id}
               colorScheme="black.900"
               iconColor="black.900"
               borderColor="black"
               size={['lg', 'md']}
+              value={rangeItem.title}
+              onChange={({ target: { value } }) =>
+                handleFilterByRange(value as PriceRange)
+              }
             >
-              {range.title}
+              {rangeItem.title}
             </Checkbox>
           ))}
         </Stack>
