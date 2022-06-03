@@ -6,7 +6,11 @@ import {
   Flex,
   useMediaQuery,
   Select,
+  Icon,
 } from '@chakra-ui/react';
+
+import { FiArrowDown, FiArrowUp } from 'react-icons/fi';
+import { ProductOrderByInput } from '../graphql/generated/graphql';
 
 import { useCart } from '../hooks/useCart';
 import { useModal } from '../hooks/useModal';
@@ -20,7 +24,13 @@ export const ProductsList = () => {
   const [isLargerThan768] = useMediaQuery('(min-width: 768px)');
   const { toggle } = useModal();
 
-  const { productsData, paginationProps } = useProducts();
+  const {
+    productsData,
+    paginationProps,
+    orderBy,
+    toggleOrderBy,
+    handleChangeOrderType,
+  } = useProducts();
 
   const { addProduct } = useCart();
 
@@ -40,14 +50,30 @@ export const ProductsList = () => {
 
         {isLargerThan768 ? (
           <Flex align="center">
-            <Image src="sort.svg" />
+            {(orderBy === ProductOrderByInput.NameAsc ||
+              orderBy === ProductOrderByInput.PriceAsc) && (
+              <Icon as={FiArrowDown} cursor="pointer" onClick={toggleOrderBy} />
+            )}
+
+            {(orderBy === ProductOrderByInput.NameDesc ||
+              orderBy === ProductOrderByInput.PriceDesc) && (
+              <Icon as={FiArrowUp} cursor="pointer" onClick={toggleOrderBy} />
+            )}
+
             <Text color="gray.800" mx="2">
               Sort by
             </Text>
-            <Select w="100px" variant="unstyled" placeholder="Price">
-              <option value="option1">Option 1</option>
-              <option value="option2">Option 2</option>
-              <option value="option3">Option 3</option>
+            <Select
+              onChange={e =>
+                handleChangeOrderType(e.target.value as ProductOrderByInput)
+              }
+              w="100px"
+              variant="unstyled"
+              placeholder="Price"
+            >
+              <option value={ProductOrderByInput.NameAsc}>
+                Alphabetically
+              </option>
             </Select>
           </Flex>
         ) : (
