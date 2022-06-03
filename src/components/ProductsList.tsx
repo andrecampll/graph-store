@@ -7,6 +7,8 @@ import {
   useMediaQuery,
   Select,
 } from '@chakra-ui/react';
+
+import { useCart } from '../hooks/useCart';
 import { useModal } from '../hooks/useModal';
 import { useProducts } from '../hooks/useProducts';
 
@@ -19,6 +21,8 @@ export const ProductsList = () => {
   const { toggle } = useModal();
 
   const { productsData, paginationProps } = useProducts();
+
+  const { addProduct } = useCart();
 
   return (
     <Wrapper px={['4', '4', '2']} my="12" mx={[0, 0, '22px']}>
@@ -59,7 +63,16 @@ export const ProductsList = () => {
         ) : null}
 
         <Flex flexDir="column" alignItems="center" w={['100%', '100%', '78%']}>
-          <ProductsGrid products={productsData?.products} />
+          {productsData?.products.length === 0 ? (
+            <Flex w="100%" alignItems="center" justifyContent="center" py="10">
+              <Text>No products :(</Text>
+            </Flex>
+          ) : (
+            <ProductsGrid
+              products={productsData?.products}
+              onAddClick={addProduct}
+            />
+          )}
           <Wrapper mt="20">
             <Pagination
               totalCountOfRegisters={productsData?.products.length}
