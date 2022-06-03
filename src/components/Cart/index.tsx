@@ -1,13 +1,13 @@
-import { Flex, Icon, Box } from '@chakra-ui/react';
-import { useState } from 'react';
+import { Flex, Icon, Box, Text } from '@chakra-ui/react';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { FiX } from 'react-icons/fi';
+import { useCart } from '../../hooks/useCart';
 import { Button } from '../Button';
 
 import { ProductCard } from './ProductCard';
 
 export const Cart = () => {
-  const [isCartOpen, setIsCartOpen] = useState(false);
+  const { toggle, isOpen, products, clearCart } = useCart();
 
   return (
     <Flex>
@@ -15,28 +15,30 @@ export const Cart = () => {
         w={[8, 8, '54px']}
         h={[8, 8, '54px']}
         as={AiOutlineShoppingCart}
-        onClick={() => setIsCartOpen(!isCartOpen)}
+        onClick={toggle}
         cursor="pointer"
       />
-      <Flex
-        background="black.900"
-        padding="2px"
-        color="white.900"
-        height={['16px', '16px', '22px']}
-        width={['16px', '16px', '22px']}
-        fontSize={['12px', '12px', '16px']}
-        alignItems="center"
-        justifyContent="center"
-        fontWeight="bold"
-        position="absolute"
-        top={['46px', '46px', '65px']}
-        ml={['23px', '23px', '40px']}
-        cursor="default"
-      >
-        1
-      </Flex>
+      {!!products.length && (
+        <Flex
+          background="black.900"
+          padding="2px"
+          color="white.900"
+          height={['16px', '16px', '22px']}
+          width={['16px', '16px', '22px']}
+          fontSize={['12px', '12px', '16px']}
+          alignItems="center"
+          justifyContent="center"
+          fontWeight="bold"
+          position="absolute"
+          top={['46px', '46px', '65px']}
+          ml={['23px', '23px', '40px']}
+          cursor="default"
+        >
+          {products.length}
+        </Flex>
+      )}
 
-      {isCartOpen && (
+      {isOpen && (
         <Box position="relative" w="max-content">
           <Flex
             position="absolute"
@@ -59,29 +61,34 @@ export const Cart = () => {
                 w="18px"
                 h="18px"
                 as={FiX}
-                onClick={() => setIsCartOpen(!isCartOpen)}
+                onClick={toggle}
                 cursor="pointer"
               />
             </Flex>
-            <ProductCard
-              name="Samurai King Resting"
-              imageUrl="https://images.pexels.com/photos/2187304/pexels-photo-2187304.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-              price="10000"
-            />
 
-            <ProductCard
-              name="Samurai King Resting"
-              imageUrl="https://images.pexels.com/photos/2187304/pexels-photo-2187304.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-              price="10000"
-            />
+            {products.length === 0 ? (
+              <Flex
+                w="100%"
+                alignItems="center"
+                justifyContent="center"
+                py="10"
+              >
+                <Text>No products :(</Text>
+              </Flex>
+            ) : (
+              products.map(product => (
+                <ProductCard
+                  key={product.id}
+                  name={product.name}
+                  imageUrl={product.image.url}
+                  price={product.price.toString()}
+                />
+              ))
+            )}
 
-            <ProductCard
-              name="Samurai King Resting"
-              imageUrl="https://images.pexels.com/photos/2187304/pexels-photo-2187304.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-              price="10000"
-            />
-
-            <Button kind="secondary">Clear</Button>
+            <Button kind="secondary" onClick={clearCart}>
+              Clear
+            </Button>
           </Flex>
         </Box>
       )}

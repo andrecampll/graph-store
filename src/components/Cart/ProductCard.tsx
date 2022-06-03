@@ -7,7 +7,7 @@ type Props = {
 };
 
 export const ProductCard = ({ name, price, imageUrl }: Props) => (
-  <Flex alignItems="center" py="20px">
+  <Flex alignItems="center" py="20px" justifyContent="space-between">
     <Box mr="5">
       <Heading fontSize="20px">{name}</Heading>
       <Text fontSize="29px" color="gray.700">

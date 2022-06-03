@@ -1,6 +1,7 @@
 import { ApolloProvider } from '@apollo/client';
 import { ChakraProvider } from '@chakra-ui/react';
 import { AppProps } from 'next/app';
+import { CartProvider } from '../hooks/useCart';
 import { ModalProvider } from '../hooks/useModal';
 import { ProductsFilterProvider } from '../hooks/useProductsFilter';
 import { useApollo } from '../lib/apollo';
@@ -11,13 +12,15 @@ function App({ Component, pageProps }: AppProps) {
 
   return (
     <ApolloProvider client={client}>
-      <ProductsFilterProvider>
-        <ModalProvider>
-          <ChakraProvider theme={theme}>
-            <Component {...pageProps} />
-          </ChakraProvider>
-        </ModalProvider>
-      </ProductsFilterProvider>
+      <CartProvider>
+        <ProductsFilterProvider>
+          <ModalProvider>
+            <ChakraProvider theme={theme}>
+              <Component {...pageProps} />
+            </ChakraProvider>
+          </ModalProvider>
+        </ProductsFilterProvider>
+      </CartProvider>
     </ApolloProvider>
   );
 }

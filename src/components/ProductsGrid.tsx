@@ -2,10 +2,11 @@ import { Grid } from '@chakra-ui/react';
 import { Product, Props as ProductProps } from './Product';
 
 type Props = {
-  products: ProductProps[];
+  products: Omit<ProductProps, 'onAddClick'>[];
+  onAddClick: (product: Omit<ProductProps, 'onAddClick'>) => void;
 };
 
-export const ProductsGrid = ({ products }: Props) => (
+export const ProductsGrid = ({ products, onAddClick }: Props) => (
   <Grid
     gridTemplateColumns={[
       'repeat(1, 1fr)',
@@ -18,7 +19,11 @@ export const ProductsGrid = ({ products }: Props) => (
     w="100%"
   >
     {products?.map(product => (
-      <Product key={product.name} {...product} />
+      <Product
+        onAddClick={() => onAddClick(product)}
+        key={product.name}
+        {...product}
+      />
     ))}
   </Grid>
 );

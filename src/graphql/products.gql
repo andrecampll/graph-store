@@ -1,5 +1,5 @@
-query getProducts($where: ProductWhereInput) {
-  products(where: $where) {
+query getProducts($where: ProductWhereInput, $first: Int, $last: Int, $skip: Int) {
+  products(where: $where, first: $first, last: $last, skip: $skip) {
     id
     name
     slug

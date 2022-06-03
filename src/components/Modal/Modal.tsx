@@ -17,6 +17,7 @@ export const Modal = ({ isOpen, children, footer }: Props) => (
         backgroundColor="rgba(50, 50, 50, 0.8)"
         inset="0px"
         position="fixed"
+        zIndex="2"
         {...omit(['style'], props)}
       >
         {element}

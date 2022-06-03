@@ -7,9 +7,10 @@ import {
   useMediaQuery,
   Select,
 } from '@chakra-ui/react';
-import { useGetProductsQuery } from '../graphql/generated/graphql';
+
+import { useCart } from '../hooks/useCart';
 import { useModal } from '../hooks/useModal';
-import { useProductsFilter } from '../hooks/useProductsFilter';
+import { useProducts } from '../hooks/useProducts';
 
 import { Filter } from './Filter';
 import { Pagination } from './Pagination';
@@ -19,59 +20,9 @@ export const ProductsList = () => {
   const [isLargerThan768] = useMediaQuery('(min-width: 768px)');
   const { toggle } = useModal();
 
-  const { categories, priceRanges } = useProductsFilter();
+  const { productsData, paginationProps } = useProducts();
 
-  const rangeConditions = priceRanges.map(range => {
-    if (range === 'Lower than $20')
-      return {
-        AND: [
-          {
-            price_lt: 19,
-          },
-        ],
-      };
-
-    if (range === '$20 - $100')
-      return {
-        AND: [
-          {
-            price_gt: 20,
-            price_lt: 99,
-          },
-        ],
-      };
-
-    if (range === '$100 - $200')
-      return {
-        AND: [
-          {
-            price_gt: 100,
-            price_lt: 200,
-          },
-        ],
-      };
-
-    if (range === 'More than $200')
-      return {
-        price_gt: 200,
-      };
-
-    return undefined;
-  });
-
-  const { data: productsData } = useGetProductsQuery({
-    variables: {
-      where: {
-        AND: [
-          {
-            featured: false,
-            category_in: categories.length ? categories : undefined,
-            OR: rangeConditions,
-          },
-        ],
-      },
-    },
-  });
+  const { addProduct } = useCart();
 
   return (
     <Wrapper px={['4', '4', '2']} my="12" mx={[0, 0, '22px']}>
@@ -112,9 +63,21 @@ export const ProductsList = () => {
         ) : null}
 
         <Flex flexDir="column" alignItems="center" w={['100%', '100%', '78%']}>
-          <ProductsGrid products={productsData?.products} />
+          {productsData?.products.length === 0 ? (
+            <Flex w="100%" alignItems="center" justifyContent="center" py="10">
+              <Text>No products :(</Text>
+            </Flex>
+          ) : (
+            <ProductsGrid
+              products={productsData?.products}
+              onAddClick={addProduct}
+            />
+          )}
           <Wrapper mt="20">
-            <Pagination totalCountOfRegisters={10} currentPage={3} />
+            <Pagination
+              totalCountOfRegisters={productsData?.products.length}
+              currentPage={paginationProps.current}
+            />
           </Wrapper>
         </Flex>
       </Flex>
