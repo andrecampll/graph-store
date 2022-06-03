@@ -1,4 +1,3 @@
-import { omit } from 'ramda';
 import { Box } from '@chakra-ui/react';
 import ReactModal from 'react-modal';
 import { ReactNode } from 'react';
@@ -18,7 +17,6 @@ export const Modal = ({ isOpen, children, footer }: Props) => (
         inset="0px"
         position="fixed"
         zIndex="2"
-        {...omit(['style'], props)}
       >
         {element}
         <Box as="footer">{footer}</Box>
