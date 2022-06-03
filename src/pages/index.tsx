@@ -34,16 +34,20 @@ export default function Home() {
   );
 
   return (
-    <Box margin="0 auto" maxW="1290">
-      <Header />
-      <Highlight
-        {...highlightData?.products[0]}
-        recommendedProducts={recommendedProducts}
-      />
+    <>
+      <title>Bejamas</title>
 
-      <ProductsList />
+      <Box margin="0 auto" maxW="1290px">
+        <Header />
+        <Highlight
+          {...highlightData?.products[0]}
+          recommendedProducts={recommendedProducts}
+        />
 
-      <FilterModal isOpen={isOpen} />
-    </Box>
+        <ProductsList />
+
+        <FilterModal isOpen={isOpen} />
+      </Box>
+    </>
   );
 }
