@@ -1,5 +1,17 @@
-query getProducts($where: ProductWhereInput, $first: Int, $last: Int, $skip: Int) {
-  products(where: $where, first: $first, last: $last, skip: $skip) {
+query getProducts(
+  $where: ProductWhereInput,
+  $first: Int,
+  $last: Int,
+  $skip: Int,
+  $orderBy: ProductOrderByInput
+) {
+  products(
+    where: $where,
+    first: $first,
+    last: $last,
+    skip: $skip,
+    orderBy: $orderBy
+  ) {
     id
     name
     slug

@@ -1,9 +1,14 @@
-import { useMemo } from 'react';
-import { useGetProductsQuery } from '../graphql/generated/graphql';
+import { useCallback, useMemo, useState } from 'react';
+import {
+  ProductOrderByInput,
+  useGetProductsQuery,
+} from '../graphql/generated/graphql';
 import { useProductsFilter } from './useProductsFilter';
 import { useProductsPagination } from './useProductsPagination';
 
 export const useProducts = () => {
+  const [orderBy, setOrderBy] = useState(ProductOrderByInput.PriceDesc);
+
   const { categories, priceRanges } = useProductsFilter();
 
   const { options, paginationProps } = useProductsPagination({
@@ -55,6 +60,24 @@ export const useProducts = () => {
     [priceRanges],
   );
 
+  const handleChangeOrderType = useCallback(
+    (value: ProductOrderByInput) =>
+      setOrderBy(value || ProductOrderByInput.PriceDesc),
+    [],
+  );
+
+  const toggleOrderBy = useCallback(() => {
+    if (orderBy === ProductOrderByInput.NameAsc)
+      return setOrderBy(ProductOrderByInput.NameDesc);
+    if (orderBy === ProductOrderByInput.NameDesc)
+      return setOrderBy(ProductOrderByInput.NameAsc);
+
+    if (orderBy === ProductOrderByInput.PriceDesc)
+      return setOrderBy(ProductOrderByInput.PriceAsc);
+
+    return setOrderBy(ProductOrderByInput.PriceDesc);
+  }, [orderBy]);
+
   const { data } = useGetProductsQuery({
     variables: {
       where: {
@@ -66,6 +89,7 @@ export const useProducts = () => {
           },
         ],
       },
+      orderBy: orderBy || undefined,
       ...options,
     },
   });
@@ -73,5 +97,8 @@ export const useProducts = () => {
   return {
     productsData: data,
     paginationProps,
+    handleChangeOrderType,
+    orderBy,
+    toggleOrderBy,
   };
 };
