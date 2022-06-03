@@ -1,5 +1,5 @@
 # Graph Store 📷
-Graph Store is your favorie online photo store made with Next.js and GraphQL and integrated with GraphCMS 📷 <br />
+Graph Store is your favorite online photo store made with Next.js and GraphQL and integrated with GraphCMS 📷 <br />
 
 <p align="center" t>
   <img src=".github/result.png" />
