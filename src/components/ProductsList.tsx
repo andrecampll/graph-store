@@ -90,7 +90,13 @@ export const ProductsList = () => {
 
         <Flex flexDir="column" alignItems="center" w={['100%', '100%', '78%']}>
           {productsData?.products.length === 0 ? (
-            <Flex w="100%" alignItems="center" justifyContent="center" py="10">
+            <Flex
+              w="100%"
+              height="100%"
+              alignItems="center"
+              justifyContent="center"
+              py="10"
+            >
               <Text>No products :(</Text>
             </Flex>
           ) : (
